@@ -1,28 +1,18 @@
-const { RedisUtil } = require("../utils/redis.util");
+const { RedisUtils } = require("../utils/redis.util");
 
-const userChannels = ["user:login", "user:register"];
-
-class UserService extends RedisUtil {
+class UserService extends RedisUtils {
   constructor(sub, pub, channels) {
     super(sub, pub, channels);
   }
-  register(message) {
-    this.publish("user:register", message);
+  async register(data) {
+    this.publish("user:register", data);
+    return await this.handleMessage("user:register");
   }
 
-  login(message) {
-    this.publish("user:login", message);
-  }
-
-  handleRegister(parsedMessage) {
-    return parsedMessage;
-  }
-
-  handleLogin(parsedMessage) {
-    return parsedMessage;
+  async login(data) {
+    this.publish("user:login", data);
+    return await this.handleMessage("user:login");
   }
 }
 
-const userService = new UserService(userChannels);
-
-module.exports = { userService };
+module.exports = { UserService };

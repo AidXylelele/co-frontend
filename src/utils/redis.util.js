@@ -1,37 +1,33 @@
-const { CustomError } = require("./customError.util");
-
-class RedisUtil {
-  constructor(sub, pub, channels) {
+class RedisUtils {
+  constructor(sub, pub, channel) {
     this.sub = sub;
     this.pub = pub;
-    this.channels = channels;
-
-    this.channels.forEach((channel) => this.sub.subscribe(channel));
-
-    this.sub.on("message", this.handleMessage.bind(this));
+    this.channel = channel;
+    this.channel.forEach(this.subscribe)
   }
 
-  publish(channel, message) {
-    this.pub.publish(channel, JSON.stringify(message));
+  publish(channel, data) {
+    const message = JSON.stringify(data);
+    this.pub.publish(channel, message);
   }
 
-  handleMessage(channel, message) {
-    const parsedMessage = JSON.parse(message);
-
-    if (this.channels.includes(channel)) {
-      const handlerName = `handle${this.capitalize(channel.split(":")[1])}`;
-      if (typeof this[handlerName] === "function") {
-        this[handlerName](parsedMessage);
-      } else {
-        throw new CustomError("Redis Util Error", `No handler for ${channel}`);
-      }
-    }
+  subscribe(channel) {
+    this.sub.subscribe(channel);
   }
 
-  capitalize(s) {
-    if (typeof s !== "string") return "";
-    return s.charAt(0).toUpperCase() + s.slice(1);
+  async handleMessage(neededChannel) {
+    return new Promise((resolve, reject) => {
+      this.sub.on("message", (channel, message) => {
+        if (channel === neededChannel) {
+          const parsedMessage = JSON.parse(message);
+          resolve(parsedMessage);
+        }
+      });
+      this.sub.on("error", (error) => {
+        reject(error);
+      });
+    });
   }
 }
 
-module.exports = { RedisUtil };
+module.exports = { RedisUtils };
