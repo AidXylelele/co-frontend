@@ -1,3 +1,6 @@
-const userChannels = ["user:register", "user:login"];
+const userChannels = {
+  register: "auth:register",
+  login: "auth:login",
+};
 
 module.exports = { userChannels };

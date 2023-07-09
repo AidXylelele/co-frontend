@@ -1,9 +1,9 @@
 class RedisUtils {
-  constructor(sub, pub, channel) {
+  constructor(sub, pub, channels) {
     this.sub = sub;
     this.pub = pub;
-    this.channel = channel;
-    this.channel.forEach(this.subscribe)
+    this.channels = channels;
+    Object.values(this.channel).forEach(this.subscribe);
   }
 
   publish(channel, data) {
