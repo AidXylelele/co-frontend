@@ -1,23 +1,27 @@
 import { Redis } from "ioredis";
-import { Channels } from "src/types/redis.types";
 import { UserService } from "../services/user.service";
 import { userChannels } from "src/consts/redis.consts";
+import { RedisChannels } from "src/types/app.types";
+import { RequestWithData } from "src/types/express.types";
 
 export class UserController {
   public sub: Redis;
   public pub: Redis;
-  public channels: Channels;
+  public channels: RedisChannels;
   public service: UserService;
 
   constructor(sub: Redis, pub: Redis) {
     this.channels = userChannels;
     this.service = new UserService(sub, pub, this.channels);
   }
-  async register(data: any) {
-    return await this.service.register(data);
+
+  async register(req: RequestWithData) {
+    const { body } = req;
+    return await this.service.register(body);
   }
 
-  async login(data: any) {
-    return await this.service.login(data);
+  async login(req: RequestWithData) {
+    const { body } = req;
+    return await this.service.login(body);
   }
 }

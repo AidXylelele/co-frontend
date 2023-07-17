@@ -1,12 +1,12 @@
 import { Redis } from "ioredis";
-import { Channels } from "src/types/redis.types";
+import { RedisChannels } from "src/types/app.types";
 
 export class RedisUtils {
   public sub: Redis;
   public pub: Redis;
-  public channels: Channels;
+  public channels: RedisChannels;
 
-  constructor(sub: Redis, pub: Redis, channels: Channels) {
+  constructor(sub: Redis, pub: Redis, channels: RedisChannels) {
     this.sub = sub;
     this.pub = pub;
     this.channels = channels;

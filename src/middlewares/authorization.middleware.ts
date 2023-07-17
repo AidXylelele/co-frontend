@@ -1,13 +1,14 @@
 import { SocketMiddleware } from "src/types/middlewares.types";
 import { CustomError } from "../utils/customError.util";
-import { User } from "src/types/passport.types";
+import { DecodedData } from "src/types/app.types";
+
 const passport = require("passport");
 
 export const isAuthed: SocketMiddleware = (socket, next) => {
   passport.authenticate(
     "jwt",
     { session: false },
-    (err: Error | CustomError, user: User, info: any) => {
+    (err: Error | CustomError, user: DecodedData, info: any) => {
       if (err) {
         return next(err);
       }

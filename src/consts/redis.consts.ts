@@ -1,6 +1,6 @@
-import { Channels } from "src/types/redis.types";
+import { RedisChannels } from "src/types/app.types";
 
-export const userChannels: Channels = {
+export const userChannels: RedisChannels = {
   register: "auth:register",
   login: "auth:login",
 };

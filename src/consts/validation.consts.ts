@@ -1,6 +1,6 @@
-import { RegExps } from "src/types/consts.types";
+import { RegExpCollection } from "src/types/app.types";
 
-export const regExps: RegExps = {
+export const regExps: RegExpCollection = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
 };
