@@ -1,13 +1,15 @@
-const express = require("express");
+import express from "express";
+import http from "http";
+import { Socket } from "socket.io";
+import { Server } from "socket.io";
+import { isValid } from "./middlewares/validation.middleware";
+import { isAuthed } from "./middlewares/authorization.middleware";
+import { Redis } from "ioredis";
+import { config } from "./confs/redis.config";
+import { UserController } from "./controllers/user.controller";
+
 const app = express();
-const http = require("http");
 const server = http.createServer(app);
-const { Server } = require("socket.io");
-const { isValid } = require("./middlewares/validation.middleware");
-const { isAuthed } = require("./middlewares/authorization.middleware");
-const { Redis } = require("ioredis");
-const { config } = require("./confs/redis.config");
-const { UserController } = require("./controllers/user.controller");
 
 const io = new Server(server);
 
@@ -20,7 +22,7 @@ io.use(isValid);
 
 io.use(isAuthed);
 
-io.on("connection", (socket) => {
+io.on("connection", (socket: Socket) => {
   console.log("a user connected");
   socket.on("login", async (input) => {
     const token = await userController.login(input);

@@ -1,5 +1,6 @@
 import Joi from "joi";
-import { regExps } from "../consts/regExps";
+import { regExps } from "src/consts/regExps";
+
 
 const registerSchema = Joi.object({
   email: Joi.string().regex(regExps.email).trim().required(),
