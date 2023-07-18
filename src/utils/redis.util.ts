@@ -19,20 +19,20 @@ export class RedisUtils {
     });
   }
 
-  publish(channel: string, data: any) {
+  async publish(channel: string, data: any) {
     const message = JSON.stringify(data);
-    this.pub.publish(channel, message);
+    await this.pub.publish(channel, message);
   }
 
-  subscribe(channel: string) {
-    this.sub.subscribe(channel);
+  async subscribe(channel: string) {
+    await this.sub.subscribe(channel);
   }
 
   private isError(channel: string): boolean {
     return Object.values(this.channels.error).includes(channel);
   }
 
-  async handleMessage(neededChannel: string) {
+  handleMessage(neededChannel: string) {
     return new Promise((resolve, reject) => {
       this.sub.on("message", (channel, message) => {
         if (channel === neededChannel) {
