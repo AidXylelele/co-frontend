@@ -13,10 +13,16 @@ export class RedisUtils {
     this._init();
   }
 
-  private _init() {
-    Object.values(this.channels).forEach((channel) => {
-      Object.values(channel).forEach(this.subscribe);
-    });
+  private async _init() {
+    const subscriptions = [];
+    for (const channel in this.channels) {
+      const values = Object.values(this.channels[channel]);
+      for (const value of values) {
+        const subscription = this.subscribe(value);
+        subscriptions.push(subscription);
+      }
+    }
+    await Promise.all(subscriptions);
   }
 
   async publish(channel: string, data: any) {
