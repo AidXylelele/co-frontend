@@ -24,4 +24,15 @@ export class UserController {
     const { body } = req;
     return await this.service.login(body);
   }
+  async deposit() {
+
+  }
+
+  async withdraw() {
+
+  }
+
+  async checkBalance() {
+    
+  }
 }

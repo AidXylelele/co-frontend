@@ -9,7 +9,7 @@ import { config } from "./confs/redis.config";
 import { UserController } from "./controllers/user.controller";
 import { UserRouter } from "./routers/user.routes";
 import { socketEvents } from "./consts/app.consts";
-
+import { errorHandler } from "./middlewares/errorHandler.middleware";
 
 const app = express();
 app.use(bodyParser.json());
@@ -28,6 +28,7 @@ const userRouter = new UserRouter(userController);
 app.use(userRouter.init());
 
 io.use(isAuthed);
+io.engine.use(errorHandler);
 
 io.on(socketEvents.connection, (socket: Socket) => {
   console.log("a user connected");

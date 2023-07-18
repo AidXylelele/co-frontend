@@ -17,4 +17,8 @@ export class UserService extends RedisUtils {
     this.publish(this.channels.login, input);
     return await this.handleMessage(this.channels.login);
   }
+
+  async deposit(input: any) {
+
+  }
 }
