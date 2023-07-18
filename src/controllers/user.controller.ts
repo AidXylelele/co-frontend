@@ -2,7 +2,7 @@ import { Redis } from "ioredis";
 import { UserService } from "../services/user.service";
 import { userChannels } from "src/consts/redis.consts";
 import { RedisChannels } from "src/types/app.types";
-import { RequestWithData } from "src/types/express.types";
+import { RegisterRequest, LoginRequest } from "src/types/express.types";
 
 export class UserController {
   public sub: Redis;
@@ -15,24 +15,13 @@ export class UserController {
     this.service = new UserService(sub, pub, this.channels);
   }
 
-  async register(req: RequestWithData) {
+  async register(req: RegisterRequest) {
     const { body } = req;
     return await this.service.register(body);
   }
 
-  async login(req: RequestWithData) {
+  async login(req: LoginRequest) {
     const { body } = req;
     return await this.service.login(body);
-  }
-  async deposit() {
-
-  }
-
-  async withdraw() {
-
-  }
-
-  async checkBalance() {
-    
   }
 }

@@ -1,3 +1,4 @@
+import { error } from "console";
 import { Redis } from "ioredis";
 import { RedisChannels } from "src/types/app.types";
 
@@ -38,14 +39,14 @@ export class RedisUtils {
     return Object.values(this.channels.error).includes(channel);
   }
 
-  handleMessage(neededChannel: string) {
+  handleMessage<T>(neededChannel: string): Promise<T> {
     return new Promise((resolve, reject) => {
       this.sub.on("message", (channel, message) => {
         if (channel === neededChannel) {
           const parsedMessage = JSON.parse(message);
           resolve(parsedMessage);
         } else if (this.isError(channel)) {
-          console.log(message);
+          reject(error);
         }
       });
 

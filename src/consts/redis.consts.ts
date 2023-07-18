@@ -5,6 +5,15 @@ export const userChannels: RedisChannels = {
     login: "auth:login",
     register: "auth:register",
   },
+  balance: {
+    check: "balance:check",
+  },
+  error: {
+    auth: "auth:error",
+  },
+};
+
+export const transactionChannels: RedisChannels = {
   deposit: {
     create: "deposit:create",
     approve: "deposit:approve",
@@ -13,11 +22,7 @@ export const userChannels: RedisChannels = {
   withdraw: {
     create: "withdraw:create",
   },
-  balance: {
-    check: "balance:check",
-  },
   error: {
     transaction: "transaction:error",
-    auth: "auth:error",
   },
 };

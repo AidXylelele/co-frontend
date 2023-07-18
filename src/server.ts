@@ -10,6 +10,7 @@ import { UserController } from "./controllers/user.controller";
 import { UserRouter } from "./routers/user.routes";
 import { socketEvents } from "./consts/app.consts";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
+import { TransactionController } from "./controllers/transaction.controller";
 
 const app = express();
 app.use(bodyParser.json());
@@ -23,8 +24,10 @@ const pub = new Redis(config);
 const sub = new Redis(config);
 
 const userController = new UserController(sub, pub);
+const transactionController = new TransactionController(sub, pub);
 
 const userRouter = new UserRouter(userController);
+
 app.use(userRouter.init());
 
 io.use(isAuthed);

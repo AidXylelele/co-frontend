@@ -9,16 +9,31 @@ export type Login = {
   password: string;
 };
 
-export type Deposit = {
+export type DepositTransaction = {
   amount: {
     total: number;
     currency: string;
   };
 };
 
-export type Widthdraw = {
+export type WithdrawTransaction = {
   amount: {
     value: number;
     currency: string;
   };
+};
+
+export type Deposit = {
+  email: string;
+  transactions: DepositTransaction[];
+};
+
+export type Withdraw = {
+  email: string;
+  transactions: WithdrawTransaction[];
+};
+
+export type ApprovalQueries = {
+  PayerID: string;
+  paymentId: string;
 };
