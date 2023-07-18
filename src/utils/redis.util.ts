@@ -10,7 +10,18 @@ export class RedisUtils {
     this.sub = sub;
     this.pub = pub;
     this.channels = channels;
-    Object.values(this.channels).forEach(this.subscribe);
+    this._init();
+  }
+
+  private _init() {
+    for (const channelName in this.channels) {
+      const channel = this.channels[channelName];
+      const keys = Object.keys(channel);
+      for (const key of keys) {
+        const nestedData = channel[key];
+        this.subscribe(nestedData);
+      }
+    }
   }
 
   publish(channel: string, data: any) {
