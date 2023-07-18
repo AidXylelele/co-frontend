@@ -14,14 +14,9 @@ export class RedisUtils {
   }
 
   private _init() {
-    for (const channelName in this.channels) {
-      const channel = this.channels[channelName];
-      const keys = Object.keys(channel);
-      for (const key of keys) {
-        const nestedData = channel[key];
-        this.subscribe(nestedData);
-      }
-    }
+    Object.values(this.channels).forEach((channel) => {
+      Object.values(channel).forEach(this.subscribe);
+    });
   }
 
   publish(channel: string, data: any) {
@@ -33,16 +28,21 @@ export class RedisUtils {
     this.sub.subscribe(channel);
   }
 
+  private isError(channel: string): boolean {
+    return Object.values(this.channels.error).includes(channel);
+  }
+
   async handleMessage(neededChannel: string) {
     return new Promise((resolve, reject) => {
       this.sub.on("message", (channel, message) => {
         if (channel === neededChannel) {
           const parsedMessage = JSON.parse(message);
           resolve(parsedMessage);
-        } else if (channel === this.channels.error) {
+        } else if (this.isError(channel)) {
           console.log(message);
         }
       });
+
       this.sub.on("error", (error) => {
         reject(error);
       });

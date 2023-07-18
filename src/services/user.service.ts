@@ -1,7 +1,7 @@
 import { Redis } from "ioredis";
 import { RedisUtils } from "../utils/redis.util";
 import { RedisChannels } from "src/types/app.types";
-import { Login, Registration } from "src/types/input.types";
+import { Deposit, Login, Registration } from "src/types/input.types";
 
 export class UserService extends RedisUtils {
   constructor(sub: Redis, pub: Redis, channels: RedisChannels) {
@@ -9,16 +9,21 @@ export class UserService extends RedisUtils {
   }
 
   async register(input: Registration) {
-    this.publish(this.channels.register, input);
-    return await this.handleMessage(this.channels.login);
+    const { login, register } = this.channels.auth;
+    this.publish(register, input);
+    return await this.handleMessage(login);
   }
 
   async login(input: Login) {
-    this.publish(this.channels.login, input);
-    return await this.handleMessage(this.channels.login);
+    const { login } = this.channels.auth;
+    this.publish(login, input);
+    return await this.handleMessage(login);
   }
 
-  async deposit(input: any) {
-
+  async deposit(input: Deposit) {
+    const { create, approve } = this.channels.deposit;
+    this.publish(create, input);
+    this.handleMessage(create);
+    
   }
 }

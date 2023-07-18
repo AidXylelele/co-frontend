@@ -3,10 +3,14 @@ export type RegExpCollection = {
 };
 
 export type RedisChannels = {
-  [key: string]: string;
+  [key: string]: {
+    [key: string]: string;
+  };
 };
 
-export type SocketEvents = RedisChannels;
+export type SocketEvents = {
+  [key: string]: string;
+};
 
 export type DecodedData = {
   email: string;
