@@ -1,7 +1,7 @@
 import { Redis } from "ioredis";
 import { UserService } from "../services/user.service";
 import { userChannels } from "src/consts/redis.consts";
-import { RedisChannels } from "src/types/app.types";
+import { RedisChannels } from "src/types/redis.types";
 import { ControllerUtils } from "src/utils/controller.utils";
 import { RegisterRequest, LoginRequest } from "src/types/express.types";
 

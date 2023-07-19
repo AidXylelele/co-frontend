@@ -1,6 +1,6 @@
 import { Redis } from "ioredis";
 import { RedisUtils } from "src/utils/redis.util";
-import { RedisChannels } from "src/types/app.types";
+import { RedisChannels } from "src/types/redis.types";
 
 export class BalanceService extends RedisUtils {
   constructor(sub: Redis, pub: Redis, channels: RedisChannels) {

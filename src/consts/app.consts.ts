@@ -1,4 +1,4 @@
-import { SocketEvents } from "src/types/app.types";
+import { SocketEvents } from "src/types/redis.types";
 
 export const AppEvents: SocketEvents = {
   connection: "connection",

@@ -6,7 +6,7 @@ import {
   ApprovalQueries,
 } from "src/types/transaction.types";
 import { RedisUtils } from "../utils/redis.util";
-import { RedisChannels } from "src/types/app.types";
+import { RedisChannels } from "src/types/redis.types";
 
 export class TransactionService extends RedisUtils {
   constructor(sub: Redis, pub: Redis, channels: RedisChannels) {

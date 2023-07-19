@@ -1,6 +1,6 @@
 import { Redis } from "ioredis";
 import { RedisUtils } from "../utils/redis.util";
-import { RedisChannels } from "src/types/app.types";
+import { RedisChannels } from "src/types/redis.types";
 import { Login, Registration } from "src/types/auth.types";
 
 

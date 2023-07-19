@@ -1,5 +1,5 @@
 import { Redis } from "ioredis";
-import { RedisChannels } from "src/types/app.types";
+import { RedisChannels } from "src/types/redis.types";
 
 export class RedisUtils {
   public sub: Redis;

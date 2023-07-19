@@ -1,7 +1,7 @@
 import { Redis } from "ioredis";
 import { userChannels } from "src/consts/redis.consts";
 import { PassportData } from "src/types/auth.types";
-import { RedisChannels } from "src/types/app.types";
+import { RedisChannels } from "src/types/redis.types";
 import { BalanceService } from "src/services/balance.service";
 import { ControllerUtils } from "src/utils/controller.utils";
 

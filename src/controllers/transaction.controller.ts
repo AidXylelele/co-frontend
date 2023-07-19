@@ -1,5 +1,5 @@
 import { Redis } from "ioredis";
-import { RedisChannels } from "src/types/app.types";
+import { RedisChannels } from "src/types/redis.types";
 import { ApprovalRequest } from "src/types/express.types";
 import { ControllerUtils } from "src/utils/controller.utils";
 import { Deposit, Withdraw } from "src/types/transaction.types";
