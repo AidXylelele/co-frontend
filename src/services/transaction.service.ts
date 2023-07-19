@@ -18,6 +18,7 @@ export class TransactionService extends RedisUtils {
   async executeDeposit(input: ApprovalQueries) {
     const { execute } = this.channels.deposit;
     await this.publish(execute, input);
+    return await this.handleMessage<any>(execute);
   }
 
   async createWithdraw(input: Withdraw) {
