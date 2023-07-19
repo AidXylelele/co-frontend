@@ -1,5 +1,5 @@
 import { CustomError } from "../utils/customError.util";
-import { DecodedData } from "src/types/app.types";
+import { PassportData } from "src/types/auth.types";
 import { SocketMiddleware } from "src/types/middlewares.types";
 
 const passport = require("passport");
@@ -8,7 +8,7 @@ export const isAuthed: SocketMiddleware = (socket, next) => {
   passport.authenticate(
     "jwt",
     { session: false },
-    (err: Error | CustomError, user: DecodedData, info: any) => {
+    (err: Error | CustomError, user: PassportData, info: any) => {
       if (err) {
         return next(err);
       }

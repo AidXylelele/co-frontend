@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from "express";
 import { CustomError } from "src/utils/customError.util";
-import { ExtendedSocket } from "./app.types";
+import { AuthedSocket } from "./socket.types";
+import { NextFunction, Request, Response } from "express";
 
 type SocketNextFunc = (error?: Error | CustomError) => void;
 
@@ -17,6 +17,6 @@ export type ExpressErrorMiddleware = (
 ) => void;
 
 export type SocketMiddleware = (
-  socket: ExtendedSocket,
+  socket: AuthedSocket,
   next: SocketNextFunc
 ) => void;

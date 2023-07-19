@@ -1,13 +1,4 @@
-export type Registration = {
-  email: string;
-  name: string;
-  password: string;
-};
-
-export type Login = {
-  email: string;
-  password: string;
-};
+import { PassportData } from "./auth.types";
 
 export type DepositTransaction = {
   amount: {
@@ -23,15 +14,11 @@ export type WithdrawTransaction = {
   };
 };
 
-export type Authorization = {
-  email: string;
-};
-
-export type Deposit = Authorization & {
+export type Deposit = PassportData & {
   transactions: DepositTransaction[];
 };
 
-export type Withdraw = Authorization & {
+export type Withdraw = PassportData & {
   transactions: WithdrawTransaction[];
 };
 
@@ -39,3 +26,9 @@ export type ApprovalQueries = {
   PayerID: string;
   paymentId: string;
 };
+
+export type TransactionResponse<T> = { data: T };
+
+export type TokenResponse = TransactionResponse<{ token: string }>;
+
+export type LinkResponse = TransactionResponse<{ href: string }>;

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { TransactionController } from "src/controllers/transaction.controller";
 import { repsonseHandler } from "src/middlewares/response.middleware";
+import { TransactionController } from "src/controllers/transaction.controller";
 
 export class TransactionRouter {
   private controller: TransactionController;

@@ -1,7 +1,7 @@
-import { ExtendedSocket } from "src/types/app.types";
+import { AuthedSocket } from "src/types/socket.types";
 
 export class ControllerUtils {
-  shapeInput(socket: ExtendedSocket, input: any = null) {
+  shapeInput(socket: AuthedSocket, input: any = null) {
     const { email } = socket.user;
     const { transactions } = input;
 

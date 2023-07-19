@@ -1,6 +1,6 @@
+import { CustomError } from "src/utils/customError.util";
 import { ObjectSchema } from "joi";
 import { ExpressMiddleware } from "src/types/middlewares.types";
-import { CustomError } from "src/utils/customError.util";
 
 export const isValid =
   (schema: ObjectSchema): ExpressMiddleware =>

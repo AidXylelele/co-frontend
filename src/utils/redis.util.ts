@@ -1,4 +1,3 @@
-import { error } from "console";
 import { Redis } from "ioredis";
 import { RedisChannels } from "src/types/app.types";
 
@@ -46,7 +45,7 @@ export class RedisUtils {
           const parsedMessage = JSON.parse(message);
           resolve(parsedMessage);
         } else if (this.isError(channel)) {
-          reject(error);
+          reject(message);
         }
       });
 

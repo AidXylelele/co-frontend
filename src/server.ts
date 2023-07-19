@@ -14,7 +14,7 @@ import {
 } from "./consts/app.consts";
 import { UserRouter } from "./routers/user.routes";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
-import { ExtendedSocket } from "./types/app.types";
+import { AuthedSocket } from "./types/socket.types";
 import { UserController } from "./controllers/user.controller";
 import { BalanceController } from "./controllers/balance.controllers";
 import { TransactionController } from "./controllers/transaction.controller";
@@ -41,7 +41,7 @@ app.use(userRouter.init());
 io.use(isAuthed);
 io.engine.use(errorHandler);
 
-io.on(AppEvents.connection, (socket: ExtendedSocket) => {
+io.on(AppEvents.connection, (socket: AuthedSocket) => {
   console.log("a user connected");
 
   socket.on(AuthEvents.login, async (input) => {

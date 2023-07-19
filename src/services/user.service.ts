@@ -1,8 +1,8 @@
 import { Redis } from "ioredis";
 import { RedisUtils } from "../utils/redis.util";
-import { LinkResponse } from "src/types/response.types";
 import { RedisChannels } from "src/types/app.types";
-import { Deposit, Login, Registration, Withdraw } from "src/types/input.types";
+import { Login, Registration } from "src/types/auth.types";
+
 
 export class UserService extends RedisUtils {
   constructor(sub: Redis, pub: Redis, channels: RedisChannels) {
@@ -21,19 +21,5 @@ export class UserService extends RedisUtils {
     await this.publish(login, input);
     const response = await this.handleMessage(login);
     return response;
-  }
-
-  async createDeposit(input: Deposit) {
-    const { create, approve } = this.channels.deposit;
-    await this.publish(create, input);
-    const response = await this.handleMessage<LinkResponse>(approve);
-    return response;
-  }
-
-  async executeDeposit(input: any) {}
-
-  async createWithdraw(input: Withdraw) {
-    const { create } = this.channels.withdraw;
-    await this.publish(create, input);
   }
 }

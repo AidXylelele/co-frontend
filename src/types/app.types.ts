@@ -1,27 +1,7 @@
-import { Socket } from "socket.io";
+import { Collection } from "./common.types";
 
-export type DecodedData = {
-  email: string;
-};
-
-export type ExtendedSocket = Socket & {
-  user?: DecodedData;
-};
-
-export type SocketEvents = {
-  [key: string]: string;
-};
+export type SocketEvents = Collection<string>;
 
 export type RedisChannels = {
-  [key: string]: {
-    [key: string]: string;
-  };
-};
-
-export type CollectionControllers = {
-  [key: string]: any;
-};
-
-export type RegExpCollection = {
-  [key: string]: RegExp;
+  [key: string]: Collection<string>;
 };
