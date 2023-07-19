@@ -1,13 +1,10 @@
 import http from "http";
 import express from "express";
 import bodyParser from "body-parser";
-import { Socket } from "socket.io";
-import { Server } from "socket.io";
-import { isAuthed } from "./middlewares/authorization.middleware";
-import { Redis } from "ioredis";
 import { config } from "./confs/redis.config";
-import { UserController } from "./controllers/user.controller";
-import { UserRouter } from "./routers/user.routes";
+import { Server } from "socket.io";
+import { Redis } from "ioredis";
+import { isAuthed } from "./middlewares/authorization.middleware";
 import {
   AppEvents,
   AuthEvents,
@@ -15,10 +12,12 @@ import {
   DepositEvents,
   WithdrawEvents,
 } from "./consts/app.consts";
+import { UserRouter } from "./routers/user.routes";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
-import { TransactionController } from "./controllers/transaction.controller";
-import { BalanceController } from "./controllers/balance.controllers";
 import { ExtendedSocket } from "./types/app.types";
+import { UserController } from "./controllers/user.controller";
+import { BalanceController } from "./controllers/balance.controllers";
+import { TransactionController } from "./controllers/transaction.controller";
 
 const app = express();
 app.use(bodyParser.json());
@@ -51,7 +50,6 @@ io.on(AppEvents.connection, (socket: ExtendedSocket) => {
   });
 
   socket.on(AuthEvents.register, async (input) => {
-
     const response = await userController.register(input);
     socket.emit(AuthEvents.register, response);
   });

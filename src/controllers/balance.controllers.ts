@@ -1,8 +1,8 @@
 import { Redis } from "ioredis";
 import { userChannels } from "src/consts/redis.consts";
-import { BalanceService } from "src/services/balance.service";
-import { RedisChannels } from "src/types/app.types";
 import { Authorization } from "src/types/input.types";
+import { RedisChannels } from "src/types/app.types";
+import { BalanceService } from "src/services/balance.service";
 import { ControllerUtils } from "src/utils/controller.utils";
 
 export class BalanceController extends ControllerUtils {

@@ -1,8 +1,8 @@
 import { Redis } from "ioredis";
 import { RedisUtils } from "../utils/redis.util";
+import { LinkResponse } from "src/types/response.types";
 import { RedisChannels } from "src/types/app.types";
 import { ApprovalQueries, Deposit, Withdraw } from "src/types/input.types";
-import { LinkResponse } from "src/types/response.types";
 
 export class TransactionService extends RedisUtils {
   constructor(sub: Redis, pub: Redis, channels: RedisChannels) {

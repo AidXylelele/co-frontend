@@ -1,6 +1,6 @@
-import { SocketMiddleware } from "src/types/middlewares.types";
 import { CustomError } from "../utils/customError.util";
 import { DecodedData } from "src/types/app.types";
+import { SocketMiddleware } from "src/types/middlewares.types";
 
 const passport = require("passport");
 
