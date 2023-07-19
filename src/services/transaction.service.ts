@@ -12,13 +12,15 @@ export class TransactionService extends RedisUtils {
   async createDeposit(input: Deposit) {
     const { create, approve } = this.channels.deposit;
     await this.publish(create, input);
-    return await this.handleMessage<LinkResponse>(approve);
+    const response = await this.handleMessage<LinkResponse>(approve);
+    return response;
   }
 
   async executeDeposit(input: ApprovalQueries) {
     const { execute } = this.channels.deposit;
     await this.publish(execute, input);
-    return await this.handleMessage<any>(execute);
+    const response = await this.handleMessage<any>(execute);
+    return response;
   }
 
   async createWithdraw(input: Withdraw) {

@@ -1,5 +1,15 @@
-export type RegExpCollection = {
-  [key: string]: RegExp;
+import { Socket } from "socket.io";
+
+export type DecodedData = {
+  email: string;
+};
+
+export type ExtendedSocket = Socket & {
+  user?: DecodedData;
+};
+
+export type SocketEvents = {
+  [key: string]: string;
 };
 
 export type RedisChannels = {
@@ -8,14 +18,10 @@ export type RedisChannels = {
   };
 };
 
-export type SocketEvents = {
-  [key: string]: string;
-};
-
-export type DecodedData = {
-  email: string;
-};
-
 export type CollectionControllers = {
   [key: string]: any;
+};
+
+export type RegExpCollection = {
+  [key: string]: RegExp;
 };

@@ -10,6 +10,7 @@ export class BalanceService extends RedisUtils {
   async check(email: string) {
     const { check } = this.channels.balance;
     await this.publish(check, email);
-    return await this.handleMessage(check);
+    const response = await this.handleMessage(check);
+    return response;
   }
 }

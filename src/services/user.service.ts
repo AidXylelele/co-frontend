@@ -12,24 +12,25 @@ export class UserService extends RedisUtils {
   async register(input: Registration) {
     const { login, register } = this.channels.auth;
     await this.publish(register, input);
-    return await this.handleMessage(login);
+    const response = await this.handleMessage(login);
+    return response;
   }
 
   async login(input: Login) {
     const { login } = this.channels.auth;
     await this.publish(login, input);
-    return await this.handleMessage(login);
+    const response = await this.handleMessage(login);
+    return response;
   }
 
   async createDeposit(input: Deposit) {
     const { create, approve } = this.channels.deposit;
     await this.publish(create, input);
-    return await this.handleMessage<LinkResponse>(approve);
+    const response = await this.handleMessage<LinkResponse>(approve);
+    return response;
   }
 
-  async executeDeposit(input: any) {
-    
-  }
+  async executeDeposit(input: any) {}
 
   async createWithdraw(input: Withdraw) {
     const { create } = this.channels.withdraw;

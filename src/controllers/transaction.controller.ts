@@ -4,20 +4,23 @@ import { Deposit, Withdraw } from "src/types/input.types";
 import { TransactionService } from "src/services/transaction.service";
 import { transactionChannels } from "src/consts/redis.consts";
 import { ApprovalRequest } from "src/types/express.types";
+import { ControllerUtils } from "src/utils/controller.utils";
 
-export class TransactionController {
+export class TransactionController extends ControllerUtils {
   public sub: Redis;
   public pub: Redis;
   public channels: RedisChannels;
   public service: TransactionService;
 
   constructor(sub: Redis, pub: Redis) {
+    super();
     this.channels = transactionChannels;
     this.service = new TransactionService(sub, pub, this.channels);
   }
 
   async createDeposit(input: Deposit) {
-    return await this.service.createDeposit(input);
+    const response = await this.service.createDeposit(input);
+    return response;
   }
 
   async executeDeposit(req: ApprovalRequest) {
@@ -26,6 +29,7 @@ export class TransactionController {
   }
 
   async createWithdraw(input: Withdraw) {
-    return await this.service.createWithdraw(input);
+    const response = await this.service.createWithdraw(input);
+    return response;
   }
 }

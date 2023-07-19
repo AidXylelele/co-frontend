@@ -1,11 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { Socket } from "socket.io";
 import { CustomError } from "src/utils/customError.util";
-import { DecodedData } from "./app.types";
-
-type ExtendedSocket = Socket & {
-  user?: DecodedData;
-};
+import { ExtendedSocket } from "./app.types";
 
 type SocketNextFunc = (error?: Error | CustomError) => void;
 

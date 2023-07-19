@@ -3,11 +3,9 @@ import { SocketEvents } from "src/types/app.types";
 export const AppEvents: SocketEvents = {
   connection: "connection",
   redirect: "redirect",
-}
-
+};
 
 export const AuthEvents: SocketEvents = {
-  
   login: "auth:login",
   register: "auth:register",
 };

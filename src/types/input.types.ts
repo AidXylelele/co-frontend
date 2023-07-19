@@ -23,13 +23,15 @@ export type WithdrawTransaction = {
   };
 };
 
-export type Deposit = {
+export type Authorization = {
   email: string;
+};
+
+export type Deposit = Authorization & {
   transactions: DepositTransaction[];
 };
 
-export type Withdraw = {
-  email: string;
+export type Withdraw = Authorization & {
   transactions: WithdrawTransaction[];
 };
 
