@@ -1,12 +1,14 @@
 import { Redis } from "ioredis";
+import { ParseUtil } from "./parse.utils";
 import { RedisChannels } from "src/types/redis.types";
 
-export class RedisUtils {
+export class RedisUtils extends ParseUtil {
   public sub: Redis;
   public pub: Redis;
   public channels: RedisChannels;
 
   constructor(sub: Redis, pub: Redis, channels: RedisChannels) {
+    super();
     this.sub = sub;
     this.pub = pub;
     this.channels = channels;
@@ -26,7 +28,7 @@ export class RedisUtils {
   }
 
   async publish(channel: string, data: any) {
-    const message = JSON.stringify(data);
+    const message = this.stringify(data);
     await this.pub.publish(channel, message);
   }
 
@@ -42,7 +44,7 @@ export class RedisUtils {
     return new Promise((resolve, reject) => {
       this.sub.on("message", (channel, message) => {
         if (channel === neededChannel) {
-          const parsedMessage = JSON.parse(message);
+          const parsedMessage = this.parse(message);
           resolve(parsedMessage);
         } else if (this.isError(channel)) {
           reject(message);
