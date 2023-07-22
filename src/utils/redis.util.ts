@@ -15,6 +15,12 @@ export class RedisUtils extends ParseUtil {
     this._init();
   }
 
+  generateChannels(pattern: string) {
+    const requestChannel = "req" + pattern;
+    const responseChannel = "res" + pattern;
+    return { requestChannel, responseChannel };
+  }
+
   private async _init() {
     const subscriptions = [];
     for (const channel in this.channels) {

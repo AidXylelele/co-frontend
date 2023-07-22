@@ -9,8 +9,9 @@ export class BalanceService extends RedisUtils {
 
   async check(email: string) {
     const { check } = this.channels.balance;
-    await this.publish(check, email);
-    const response = await this.handleMessage(check);
+    const { requestChannel, responseChannel } = this.generateChannels(check);
+    await this.publish(requestChannel, email);
+    const response = await this.handleMessage(responseChannel);
     return response;
   }
 }

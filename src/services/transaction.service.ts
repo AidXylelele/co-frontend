@@ -15,20 +15,24 @@ export class TransactionService extends RedisUtils {
 
   async createDeposit(input: Deposit) {
     const { create, approve } = this.channels.deposit;
-    await this.publish(create, input);
-    const response = await this.handleMessage<LinkResponse>(approve);
+    const createChannels = this.generateChannels(create);
+    const approveChannels = this.generateChannels(approve);
+    await this.publish(createChannels.requestChannel, input);
+    const response = await this.handleMessage<LinkResponse>(
+      approveChannels.responseChannel
+    );
     return response;
   }
 
   async executeDeposit(input: ApprovalQueries) {
     const { execute } = this.channels.deposit;
-    await this.publish(execute, input);
-    const response = await this.handleMessage<any>(execute);
-    return response;
+    const { requestChannel } = this.generateChannels(execute);
+    await this.publish(requestChannel, input);
   }
 
   async createWithdraw(input: Withdraw) {
     const { create } = this.channels.withdraw;
-    await this.publish(create, input);
+    const { requestChannel } = this.generateChannels(create);
+    await this.publish(requestChannel, input);
   }
 }

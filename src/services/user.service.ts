@@ -3,7 +3,6 @@ import { RedisUtils } from "../utils/redis.util";
 import { RedisChannels } from "src/types/redis.types";
 import { Login, Registration } from "src/types/auth.types";
 
-
 export class UserService extends RedisUtils {
   constructor(sub: Redis, pub: Redis, channels: RedisChannels) {
     super(sub, pub, channels);
@@ -11,15 +10,18 @@ export class UserService extends RedisUtils {
 
   async register(input: Registration) {
     const { login, register } = this.channels.auth;
-    await this.publish(register, input);
-    const response = await this.handleMessage(login);
+    const registerChannels = this.generateChannels(register);
+    const loginChannels = this.generateChannels(login);
+    await this.publish(registerChannels.requestChannel, input);
+    const response = await this.handleMessage(loginChannels.responseChannel);
     return response;
   }
 
   async login(input: Login) {
     const { login } = this.channels.auth;
-    await this.publish(login, input);
-    const response = await this.handleMessage(login);
+    const { requestChannel, responseChannel } = this.generateChannels(login);
+    await this.publish(requestChannel, input);
+    const response = await this.handleMessage(responseChannel);
     return response;
   }
 }
