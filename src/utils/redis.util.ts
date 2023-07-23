@@ -1,33 +1,51 @@
 import { Redis } from "ioredis";
 import { ParseUtil } from "./parse.utils";
-import { RedisChannels } from "src/types/redis.types";
+import { Collection } from "src/types/common.types";
+import { RedisChannels, RedisCollection } from "src/types/redis.types";
 
 export class RedisUtils extends ParseUtil {
   public sub: Redis;
   public pub: Redis;
   public channels: RedisChannels;
 
-  constructor(sub: Redis, pub: Redis, channels: RedisChannels) {
+  constructor(sub: Redis, pub: Redis, templates: RedisCollection) {
     super();
     this.sub = sub;
     this.pub = pub;
-    this.channels = channels;
-    this._init();
+    this._init(templates);
   }
 
-  generateChannels(pattern: string) {
-    const requestChannel = "req" + pattern;
-    const responseChannel = "res" + pattern;
-    return { requestChannel, responseChannel };
+  generateChannels(pattern: string, templates: RedisCollection) {
+    const result: RedisCollection = {};
+    const entries = Object.entries(templates);
+    for (const [key, value] of entries) {
+      const filled: Collection<string> = {};
+      for (const item in value) {
+        const template = value[item];
+        filled[item] = pattern + template;
+      }
+      result[key] = filled;
+    }
+    return result;
   }
 
-  private async _init() {
+  setChannels(templates: RedisCollection) {
+    const requests = this.generateChannels("req", templates);
+    const responses = this.generateChannels("res", templates);
+    this.channels = { requests, responses };
+  }
+
+  private async _init(templates: RedisCollection) {
     const subscriptions = [];
-    for (const channel in this.channels) {
-      const values = Object.values(this.channels[channel]);
-      for (const value of values) {
-        const subscription = this.subscribe(value);
-        subscriptions.push(subscription);
+    this.setChannels(templates);
+    const allChannelTypes = Object.values(this.channels);
+    for (const channelType of allChannelTypes) {
+      for (const channels in channelType) {
+        const values = Object.values(channelType[channels]);
+        for (const value of values) {
+          const subscription = this.subscribe(value);
+          subscriptions.push(subscription);
+        }
       }
     }
     await Promise.all(subscriptions);
@@ -43,7 +61,8 @@ export class RedisUtils extends ParseUtil {
   }
 
   private isError(channel: string): boolean {
-    return Object.values(this.channels.error).includes(channel);
+    const { error } = this.channels.responses;
+    return Object.values(error).includes(channel);
   }
 
   handleMessage<T>(neededChannel: string): Promise<T> {

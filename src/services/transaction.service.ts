@@ -6,33 +6,28 @@ import {
   ApprovalQueries,
 } from "src/types/transaction.types";
 import { RedisUtils } from "../utils/redis.util";
-import { RedisChannels } from "src/types/redis.types";
+import { RedisCollection } from "src/types/redis.types";
 
 export class TransactionService extends RedisUtils {
-  constructor(sub: Redis, pub: Redis, channels: RedisChannels) {
-    super(sub, pub, channels);
+  constructor(sub: Redis, pub: Redis, templates: RedisCollection) {
+    super(sub, pub, templates);
   }
 
   async createDeposit(input: Deposit) {
-    const { create, approve } = this.channels.deposit;
-    const createChannels = this.generateChannels(create);
-    const approveChannels = this.generateChannels(approve);
-    await this.publish(createChannels.requestChannel, input);
-    const response = await this.handleMessage<LinkResponse>(
-      approveChannels.responseChannel
-    );
+    const { create } = this.channels.requests.deposit;
+    const { approve } = this.channels.responses.deposit;
+    await this.publish(create, input);
+    const response = await this.handleMessage<LinkResponse>(approve);
     return response;
   }
 
   async executeDeposit(input: ApprovalQueries) {
-    const { execute } = this.channels.deposit;
-    const { requestChannel } = this.generateChannels(execute);
-    await this.publish(requestChannel, input);
+    const { execute } = this.channels.requests.deposit;
+    await this.publish(execute, input);
   }
 
   async createWithdraw(input: Withdraw) {
-    const { create } = this.channels.withdraw;
-    const { requestChannel } = this.generateChannels(create);
-    await this.publish(requestChannel, input);
+    const { create } = this.channels.requests.withdraw;
+    await this.publish(create, input);
   }
 }

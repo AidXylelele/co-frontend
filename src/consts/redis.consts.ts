@@ -1,6 +1,6 @@
-import { RedisChannels } from "src/types/redis.types";
+import { RedisCollection } from "src/types/redis.types";
 
-export const userChannels: RedisChannels = {
+export const userChannels: RedisCollection = {
   auth: {
     login: ":auth:login",
     register: ":auth:register",
@@ -13,7 +13,7 @@ export const userChannels: RedisChannels = {
   },
 };
 
-export const transactionChannels: RedisChannels = {
+export const transactionChannels: RedisCollection = {
   deposit: {
     create: ":deposit:create",
     approve: ":deposit:approve",

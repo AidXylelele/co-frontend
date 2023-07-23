@@ -11,7 +11,7 @@ import {
   BalanceEvents,
   DepositEvents,
   WithdrawEvents,
-} from "./consts/app.consts";
+} from "./consts/socket.consts";
 import { UserRouter } from "./routers/user.routes";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
 import { AuthedSocket } from "./types/socket.types";
