@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  co-forntend: 
+    image: imageName
+    ports: 
+      -"3000:3000"
+  co-user: 
+    image: imageName
+    ports:
+      -"3001:3001"
+  co-transactions: 
+    image: imageName
+    ports:
+      -"3002:3002"
