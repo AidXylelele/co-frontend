@@ -1,6 +1,6 @@
 FROM node:18
 
-WORKDIR /
+WORKDIR /app
 
 COPY package*.json ./
 
@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 8080
 
-CMD [ "node", "server.ts" ]
+CMD [ "node", "src/server.ts" ]
