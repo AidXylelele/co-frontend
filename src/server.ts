@@ -18,6 +18,7 @@ import { AuthedSocket } from "./types/socket.types";
 import { UserController } from "./controllers/user.controller";
 import { BalanceController } from "./controllers/balance.controllers";
 import { TransactionController } from "./controllers/transaction.controller";
+import { TransactionRouter } from "./routers/transaction.router";
 
 const app = express();
 app.use(bodyParser.json());
@@ -35,8 +36,10 @@ const transactionController = new TransactionController(sub, pub);
 const balanceController = new BalanceController(sub, pub);
 
 const userRouter = new UserRouter(userController);
+const transactionRouter = new TransactionRouter(transactionController)
 
 app.use(userRouter.init());
+app.use(transactionRouter.init())
 
 io.use(isAuthed);
 io.engine.use(errorHandler);
